@@ -1,23 +1,28 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+const ShopScreen = () => {
+  const availabelProducts = useSelector((state) => state.products.availabelProducts);
 
-const ShopScreen = () => (
-  <View style={styles.screen}>
-    <Text>ShopScreen</Text>
-  </View>
-);
+  const renderItem = ({ item }) => (
+    <View>
+      <Text>{item.title}</Text>
+    </View>
+  );
+
+  return (
+    <FlatList
+      data={availabelProducts}
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+    />
+  );
+};
 
 ShopScreen.navigationOptions = ({ navigation }) => {
   return {
