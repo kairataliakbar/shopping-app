@@ -1,31 +1,35 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { FlatList, View, Text } from "react-native";
+import { FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
+import ProductItem from "../components/ProductItem";
 
 const ShopScreen = () => {
   const availabelProducts = useSelector((state) => state.products.availabelProducts);
-
-  const renderItem = ({ item }) => (
-    <View>
-      <Text>{item.title}</Text>
-    </View>
-  );
 
   return (
     <FlatList
       data={availabelProducts}
       keyExtractor={(item) => item.id}
-      renderItem={renderItem}
+      renderItem={(itemData) => (
+        <ProductItem
+          imageUrl={itemData.item.imageUrl}
+          title={itemData.item.title}
+          price={itemData.item.price}
+          onViewProduct={() => {}}
+          onToCard={() => {}}
+        />
+      )}
     />
   );
 };
 
 ShopScreen.navigationOptions = ({ navigation }) => {
   return {
+    headerTitle: "All Products",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

@@ -9,11 +9,23 @@ import OrdersScreen from "../screens/OrdersScreen";
 import ManageProductsScreen from "../screens/ManageProductsScreen";
 import EditProductScreen from "../screens/EditProductScreen";
 
+import Colors from "../constants/Colors";
+
+const navigationOptions = {
+  headerStyle: {
+    backgroundColor: Colors.primary
+  },
+  headerTintColor: "white"
+};
+
 const ShopNavigator = createStackNavigator(
   {
     Shop: ShopScreen,
     ProductDetail: ProductDetailScreen,
     Cart: CartScreen
+  },
+  {
+    defaultNavigationOptions: navigationOptions
   }
 );
 
@@ -21,12 +33,18 @@ const ManageProductsNavigator = createStackNavigator(
   {
     ManageProducts: ManageProductsScreen,
     EditProduct: EditProductScreen
+  },
+  {
+    defaultNavigationOptions: navigationOptions
   }
 );
 
 const OrdersNavigator = createStackNavigator(
   {
     Orders: OrdersScreen
+  },
+  {
+    defaultNavigationOptions: navigationOptions
   }
 );
 

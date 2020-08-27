@@ -4,7 +4,7 @@ import * as Font from "expo-font";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
-import AppNavigator from "./navigations/AppNavigator";
+import AppNavigator from "./navigation/AppNavigator";
 import productsReducer from "./store/reducers/products";
 
 const rootReducer = combineReducers({
