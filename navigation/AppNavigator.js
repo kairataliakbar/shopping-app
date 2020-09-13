@@ -10,12 +10,15 @@ import ManageProductsScreen from "../screens/ManageProductsScreen";
 import EditProductScreen from "../screens/EditProductScreen";
 
 import Colors from "../constants/Colors";
+import GlobalStyles from "../constants/GlobalStyles";
 
 const navigationOptions = {
   headerStyle: {
     backgroundColor: Colors.primary
   },
-  headerTintColor: "white"
+  headerTintColor: "white",
+  headerTitleStyle: GlobalStyles.textBold,
+  headerBackTitleStyle: GlobalStyles.text
 };
 
 const ShopNavigator = createStackNavigator(

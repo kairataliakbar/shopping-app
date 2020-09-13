@@ -1,8 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Text, View, Button, StyleSheet } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform
+} from "react-native";
 
 import Colors from "../constants/Colors";
+import GlobalStyles from "../constants/GlobalStyles";
 
 const styles = StyleSheet.create({
   productItemContainer: {
@@ -15,6 +25,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: 300,
     margin: 20
+  },
+  touchable: {
+    borderRadius: 10,
+    overflow: "hidden"
   },
   imageContainer: {
     height: "60%",
@@ -48,26 +62,36 @@ const styles = StyleSheet.create({
 });
 
 const ProductItem = ({ imageUrl, title, price, onViewProduct, onToCard }) => {
+  const TouchableComponent = Platform.OS === "android" && Platform.Version >= 21
+    ? TouchableNativeFeedback
+    : TouchableOpacity;
+
   return (
     <View style={styles.productItemContainer}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: imageUrl }} />
-      </View>
-      <View style={styles.details}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.price}>${price.toFixed(2)}</Text>
-      </View>
-      <View style={styles.actions}>
-        <Button
-          color={Colors.primary}
-          title="View Product"
-          onPress={onViewProduct}
-        />
-        <Button
-          color={Colors.primary}
-          title="To Card"
-          onPress={onToCard}
-        />
+      <View style={styles.touchable}>
+        <TouchableComponent onPress={onViewProduct} useForeground>
+          <View>
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{ uri: imageUrl }} />
+            </View>
+            <View style={styles.details}>
+              <Text style={{ ...styles.title, ...GlobalStyles.textBold }}>{title}</Text>
+              <Text style={{ ...styles.price, ...GlobalStyles.text }}>${price.toFixed(2)}</Text>
+            </View>
+            <View style={styles.actions}>
+              <Button
+                color={Colors.primary}
+                title="View Product"
+                onPress={onViewProduct}
+              />
+              <Button
+                color={Colors.primary}
+                title="To Card"
+                onPress={onToCard}
+              />
+            </View>
+          </View>
+        </TouchableComponent>
       </View>
     </View>
   );
