@@ -1,4 +1,4 @@
-import { ADD_TO_CART } from "../actions/carts";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/carts";
 import CartItem from "../../data/cart-item";
 
 const initialState = {
@@ -25,6 +25,25 @@ export default (state = initialState, action) => {
         return {
           items: state.items.concat(newItem),
           totalPrice: state.totalPrice + addedProduct.price
+        };
+      }
+    }
+    case REMOVE_FROM_CART: {
+      const removeProduct = state.items.find((item) => item.id === action.productId);
+
+      if (removeProduct.quantity === 1) {
+        return {
+          items: state.items.filter((item) => item.id !== removeProduct.id),
+          totalPrice: state.totalPrice - removeProduct.sum
+        };
+      } else {
+        return {
+          items: state.items.map((item) => (
+            item.id === removeProduct.id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )),
+          totalPrice: state.totalPrice - removeProduct.sum
         };
       }
     }

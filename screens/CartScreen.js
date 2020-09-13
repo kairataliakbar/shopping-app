@@ -1,9 +1,11 @@
 import React from "react";
-import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
+import CartItem from "../components/CartItem";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
+import * as cartActions from "../store/actions/carts";
 
 const styles = StyleSheet.create({
   screen: {
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
 const CartScreen = () => {
   const totalPriceItems = useSelector((state) => state.cart.totalPrice);
   const items = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.screen}>
@@ -45,9 +48,18 @@ const CartScreen = () => {
         </Text>
         <Button title="Order Now" color={Colors.accent} disabled={items.length === 0} />
       </View>
-      <ScrollView style={styles.carts}>
-        <Text>Cart Items</Text>
-      </ScrollView>
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.id}
+        renderItem={(itemData) => (
+          <CartItem
+            quantity={itemData.item.quantity}
+            title={itemData.item.prodTitle}
+            price={itemData.item.sum}
+            onRemove={() => dispatch(cartActions.removeFromCart(itemData.item.id))}
+          />
+        )}
+      />
     </View>
   );
 };
