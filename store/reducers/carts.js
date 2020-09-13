@@ -2,7 +2,7 @@ import { ADD_TO_CART } from "../actions/carts";
 import CartItem from "../../data/cart-item";
 
 const initialState = {
-  items: {},
+  items: [],
   totalPrice: 0
 };
 
@@ -10,27 +10,25 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART: {
       const addedProduct = action.product;
-      const prodPrice = addedProduct.prodPrice;
-      const prodTitle = addedProduct.prodTitle;
-      let updateOrNewCartItem;
-
-      if (state.items[addedProduct.id]) {
-        updateOrNewCartItem = new CartItem(
-          state.items[addedProduct.id].quantity + 1,
-          prodPrice,
-          prodTitle,
-          prodPrice + state.items[addedProduct.id].sum
-        );
+      if (state.items.some((item) => item.id === addedProduct.id)) {
+        return {
+          items: state.items.map((item) => {
+            if (item.id === addedProduct.id) {
+              return { ...item, quantity: item.quantity + 1 };
+            }
+            return item;
+          }),
+          totalPrice: state.totalPrice + addedProduct.price
+        };
       } else {
-        updateOrNewCartItem = new CartItem(1, prodPrice, prodTitle, prodPrice);
+        const newItem = new CartItem(addedProduct.id, 1, addedProduct.price, addedProduct.title, addedProduct.price);
+        return {
+          items: state.items.concat(newItem),
+          totalPrice: state.totalPrice + addedProduct.price
+        };
       }
-
-      return {
-        ...state,
-        items: { ...state.items, [addedProduct.id]: updateOrNewCartItem },
-        totalPrice: state.totalPrice + addedProduct.prodPrice
-      };
     }
+    default:
+      return state;
   }
-  return state;
 };
