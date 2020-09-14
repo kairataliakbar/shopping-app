@@ -6,6 +6,7 @@ import CartItem from "../components/CartItem";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 import * as cartActions from "../store/actions/carts";
+import * as ordersActions from "../store/actions/orders";
 
 const styles = StyleSheet.create({
   screen: {
@@ -46,7 +47,12 @@ const CartScreen = () => {
         <Text style={{ ...styles.summaryText, ...GlobalStyles.textBold }}>
           Total: <Text style={{ color: Colors.primary }}>${totalPriceItems.toFixed(2)}</Text>
         </Text>
-        <Button title="Order Now" color={Colors.accent} disabled={items.length === 0} />
+        <Button
+          title="Order Now"
+          color={Colors.accent}
+          disabled={items.length === 0}
+          onPress={() => dispatch(ordersActions.addOrder(items, totalPriceItems))}
+        />
       </View>
       <FlatList
         data={items}

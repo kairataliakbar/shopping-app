@@ -2,6 +2,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
 
@@ -13,11 +14,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const OrdersScreen = () => (
-  <View style={styles.screen}>
-    <Text>OrdersScreen</Text>
-  </View>
-);
+const OrdersScreen = () => {
+  const orders = useSelector((state) => state.orders.orders);
+  console.log(orders);
+  return (
+    <View style={styles.screen}>
+      <Text>OrdersScreen</Text>
+    </View>
+  );
+};
 
 OrdersScreen.navigationOptions = ({ navigation }) => {
   return {
