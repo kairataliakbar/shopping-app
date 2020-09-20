@@ -1,6 +1,9 @@
+/* eslint-disable react/display-name */
+import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
+import { Ionicons } from "@expo/vector-icons";
 
 import ShopScreen from "../screens/ShopScreen";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
@@ -28,6 +31,11 @@ const ShopNavigator = createStackNavigator(
     Cart: CartScreen
   },
   {
+    navigationOptions: {
+      drawerIcon: (drawerInfo) => (
+        <Ionicons name="ios-cart" size={24} color={drawerInfo.tintColor} />
+      )
+    },
     defaultNavigationOptions: navigationOptions
   }
 );
@@ -38,6 +46,11 @@ const ManageProductsNavigator = createStackNavigator(
     EditProduct: EditProductScreen
   },
   {
+    navigationOptions: {
+      drawerIcon: (drawerInfo) => (
+        <Ionicons name="ios-create" size={24} color={drawerInfo.tintColor} />
+      )
+    },
     defaultNavigationOptions: navigationOptions
   }
 );
@@ -47,6 +60,11 @@ const OrdersNavigator = createStackNavigator(
     Orders: OrdersScreen
   },
   {
+    navigationOptions: {
+      drawerIcon: (drawerInfo) => (
+        <Ionicons name="ios-list" size={24} color={drawerInfo.tintColor} />
+      )
+    },
     defaultNavigationOptions: navigationOptions
   }
 );
@@ -56,6 +74,11 @@ const AppNavigator = createDrawerNavigator(
     Shop: ShopNavigator,
     Orders: OrdersNavigator,
     ManageProducts: ManageProductsNavigator
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.primary,
+    }
   }
 );
 

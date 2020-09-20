@@ -1,26 +1,26 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+import OrderItem from "../components/OrderItem";
 
 const OrdersScreen = () => {
   const orders = useSelector((state) => state.orders.orders);
-  console.log(orders);
+
   return (
-    <View style={styles.screen}>
-      <Text>OrdersScreen</Text>
-    </View>
+    <FlatList
+      data={orders}
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
+        <OrderItem
+          totalPrice={itemData.item.totalPrice}
+          date={itemData.item.date}
+        />
+      )}
+    />
   );
 };
 
