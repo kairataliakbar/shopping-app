@@ -1,26 +1,35 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
+import ProductItem from "../components/ProductItem";
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+const ManageProductsScreen = () => {
+  const userProducts = useSelector((state) => state.products.userProducts);
 
-const ManageProductsScreen = () => (
-  <View style={styles.screen}>
-    <Text>ManageProductsScreen</Text>
-  </View>
-);
+  return (
+    <FlatList
+      data={userProducts}
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
+        <ProductItem
+          imageUrl={itemData.item.imageUrl}
+          price={itemData.item.price}
+          title={itemData.item.title}
+          onViewProduct={() => {}}
+          onToCard={() => {}}
+        />
+      )}
+    />
+  );
+};
 
 ManageProductsScreen.navigationOptions = ({ navigation }) => {
   return {
+    headerTitle: "Manage Products",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item

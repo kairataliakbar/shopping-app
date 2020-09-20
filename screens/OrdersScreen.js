@@ -18,6 +18,7 @@ const OrdersScreen = () => {
         <OrderItem
           totalPrice={itemData.item.totalPrice}
           date={itemData.item.date}
+          items={itemData.item.items}
         />
       )}
     />

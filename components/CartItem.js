@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CartItem = ({ quantity, title, price, onRemove }) => {
+const CartItem = ({ quantity, title, price, onRemove, deletable }) => {
   return (
     <View style={styles.cartItem}>
       <View style={styles.itemData}>
@@ -39,9 +39,11 @@ const CartItem = ({ quantity, title, price, onRemove }) => {
       </View>
       <View style={styles.itemData}>
         <Text style={{ ...styles.text, ...GlobalStyles.textBold }}>${price && price.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.deleteButton} onPress={onRemove}>
-          <Ionicons name="ios-trash" color="red" size={24} />
-        </TouchableOpacity>
+        {deletable && (
+          <TouchableOpacity style={styles.deleteButton} onPress={onRemove}>
+            <Ionicons name="ios-trash" color="red" size={24} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -51,7 +53,8 @@ CartItem.propTypes = {
   quantity: PropTypes.number,
   title: PropTypes.string,
   price: PropTypes.number,
-  onRemove: PropTypes.func
+  onRemove: PropTypes.func,
+  deletable: PropTypes.bool
 };
 
 export default CartItem;

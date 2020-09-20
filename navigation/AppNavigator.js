@@ -47,6 +47,7 @@ const ManageProductsNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
+      drawerLabel: "Manage Products",
       drawerIcon: (drawerInfo) => (
         <Ionicons name="ios-create" size={24} color={drawerInfo.tintColor} />
       )

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
+import CartItem from "./CartItem";
 
 const styles = StyleSheet.create({
-  item: {
+  orderItem: {
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center"
   },
-  detailsOrder: {
+  detailsOrderItem: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -31,13 +32,18 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 18,
     color: "#888"
+  },
+  cartItems: {
+    width: "100%"
   }
 });
 
-const OrderItem = ({ totalPrice, date }) => {
+const OrderItem = ({ totalPrice, date, items }) => {
+  const [isShowItems, setIsShowItems] = useState(false);
+
   return (
-    <View style={styles.item}>
-      <View style={styles.detailsOrder}>
+    <View style={styles.orderItem}>
+      <View style={styles.detailsOrderItem}>
         <Text style={[styles.totalPrice, GlobalStyles.textBold]}>
           ${totalPrice.toFixed(2)}
         </Text>
@@ -45,14 +51,31 @@ const OrderItem = ({ totalPrice, date }) => {
           {moment(date).format("MMMM Do YYYY, h:mm")}
         </Text>
       </View>
-      <Button title="SHOW DETAILS" color={Colors.primary} onPress={() => {}} />
+      <Button
+        title={isShowItems ? "HIDE DETAILS" : "SHOW DETAILS"}
+        color={Colors.primary}
+        onPress={() => setIsShowItems(!isShowItems)}
+      />
+      {isShowItems && (
+        <View style={styles.cartItems}>
+          {items.map((item) => (
+            <CartItem
+              key={item.id}
+              quantity={item.quantity}
+              title={item.prodTitle}
+              price={item.sum}
+            />
+          ))}
+        </View>
+      )}
     </View>
   );
 };
 
 OrderItem.propTypes = {
   totalPrice: PropTypes.number,
-  date: PropTypes.string
+  date: PropTypes.string,
+  items: PropTypes.array
 };
 
 export default OrderItem;
