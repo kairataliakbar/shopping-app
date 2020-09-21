@@ -4,14 +4,12 @@ import {
   Image,
   Text,
   View,
-  Button,
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform
 } from "react-native";
 
-import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 
 const styles = StyleSheet.create({
@@ -61,7 +59,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ProductItem = ({ imageUrl, title, price, onViewProduct, onToCard }) => {
+const ProductItem = ({ imageUrl, title, price, onSelect, children }) => {
   const TouchableComponent = Platform.OS === "android" && Platform.Version >= 21
     ? TouchableNativeFeedback
     : TouchableOpacity;
@@ -69,7 +67,7 @@ const ProductItem = ({ imageUrl, title, price, onViewProduct, onToCard }) => {
   return (
     <View style={styles.productItemContainer}>
       <View style={styles.touchable}>
-        <TouchableComponent onPress={onViewProduct} useForeground>
+        <TouchableComponent onPress={onSelect} useForeground>
           <View>
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{ uri: imageUrl }} />
@@ -79,16 +77,7 @@ const ProductItem = ({ imageUrl, title, price, onViewProduct, onToCard }) => {
               <Text style={{ ...styles.price, ...GlobalStyles.text }}>${price.toFixed(2)}</Text>
             </View>
             <View style={styles.actions}>
-              <Button
-                color={Colors.primary}
-                title="View Product"
-                onPress={onViewProduct}
-              />
-              <Button
-                color={Colors.primary}
-                title="To Card"
-                onPress={onToCard}
-              />
+              {children}
             </View>
           </View>
         </TouchableComponent>
@@ -101,8 +90,8 @@ ProductItem.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  onViewProduct: PropTypes.func.isRequired,
-  onToCard: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  children: PropTypes.array
 };
 
 export default ProductItem;
