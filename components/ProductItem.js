@@ -10,17 +10,11 @@ import {
   Platform
 } from "react-native";
 
+import Card from "../components/Card";
 import GlobalStyles from "../constants/GlobalStyles";
 
 const styles = StyleSheet.create({
   productItemContainer: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     height: 300,
     margin: 20
   },
@@ -65,7 +59,7 @@ const ProductItem = ({ imageUrl, title, price, onSelect, children }) => {
     : TouchableOpacity;
 
   return (
-    <View style={styles.productItemContainer}>
+    <Card style={styles.productItemContainer}>
       <View style={styles.touchable}>
         <TouchableComponent onPress={onSelect} useForeground>
           <View>
@@ -82,7 +76,7 @@ const ProductItem = ({ imageUrl, title, price, onSelect, children }) => {
           </View>
         </TouchableComponent>
       </View>
-    </View>
+    </Card>
   );
 };
 

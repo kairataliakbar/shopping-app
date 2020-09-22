@@ -3,6 +3,7 @@ import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import CartItem from "../components/CartItem";
+import Card from "../components/Card";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 import * as cartActions from "../store/actions/carts";
@@ -17,13 +18,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     marginBottom: 20,
     paddingVertical: 10,
     paddingHorizontal: 14
@@ -43,7 +37,7 @@ const CartScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.summary}>
+      <Card style={styles.summary}>
         <Text style={{ ...styles.summaryText, ...GlobalStyles.textBold }}>
           Total: <Text style={{ color: Colors.primary }}>${totalPriceItems.toFixed(2)}</Text>
         </Text>
@@ -53,7 +47,7 @@ const CartScreen = () => {
           disabled={items.length === 0}
           onPress={() => dispatch(ordersActions.addOrder(items, totalPriceItems))}
         />
-      </View>
+      </Card>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}

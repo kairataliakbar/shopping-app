@@ -6,16 +6,10 @@ import moment from "moment";
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
 import CartItem from "./CartItem";
+import Card from "./Card";
 
 const styles = StyleSheet.create({
   orderItem: {
-    shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 5,
-    borderRadius: 10,
-    backgroundColor: "white",
     margin: 20,
     padding: 10,
     alignItems: "center"
@@ -42,7 +36,7 @@ const OrderItem = ({ totalPrice, date, items }) => {
   const [isShowItems, setIsShowItems] = useState(false);
 
   return (
-    <View style={styles.orderItem}>
+    <Card style={styles.orderItem}>
       <View style={styles.detailsOrderItem}>
         <Text style={[styles.totalPrice, GlobalStyles.textBold]}>
           ${totalPrice.toFixed(2)}
@@ -68,7 +62,7 @@ const OrderItem = ({ totalPrice, date, items }) => {
           ))}
         </View>
       )}
-    </View>
+    </Card>
   );
 };
 

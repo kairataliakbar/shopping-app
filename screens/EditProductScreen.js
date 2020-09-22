@@ -57,6 +57,7 @@ const EditProductScreen = ({ navigation }) => {
         parseInt(price, 10)
       ));
     }
+    navigation.goBack();
   }, [dispatch, productId, title, imageUrl, description, price]);
 
   useEffect(() => {
