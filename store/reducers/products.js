@@ -1,8 +1,13 @@
 import moment from "moment";
 
 import PRODUCTS from "../../data/dummy-data";
-import { DELETE_PRODUCT, UPDATE_PRODUCT, CREATE_PRODUCT } from "../actions/products";
 import Product from "../../models/product";
+import {
+  DELETE_PRODUCT,
+  UPDATE_PRODUCT,
+  CREATE_PRODUCT,
+  SET_PRODUCTS,
+} from "../actions/products";
 
 const initialState = {
   availabelProducts: PRODUCTS,
@@ -11,6 +16,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_PRODUCTS: {
+      return {
+        availabelProducts: action.products,
+        userProducts: action.products.filter((product) => product.ownerId === "u1")
+      };
+    }
     case DELETE_PRODUCT: {
       return {
         userProducts: state.userProducts.filter((product) => product.id !== action.productId),

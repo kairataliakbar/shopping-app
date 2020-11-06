@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { FlatList, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -9,10 +9,15 @@ import Colors from "../constants/Colors";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import ProductItem from "../components/ProductItem";
 import * as cartActions from "../store/actions/carts";
+import * as productsActions from "../store/actions/products";
 
 const ShopScreen = ({ navigation }) => {
   const availabelProducts = useSelector((state) => state.products.availabelProducts);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(productsActions.fetchProducts());
+  }, [dispatch]);
 
   const handleSelectProduct = (id, title) => {
     navigation.navigate("ProductDetail", {
