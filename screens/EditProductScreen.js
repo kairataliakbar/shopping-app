@@ -1,12 +1,13 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
-import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TextInput, ActivityIndicator, Alert } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import GlobalStyles from "../constants/GlobalStyles";
+import Colors from "../constants/Colors";
 import * as productsActions from "../store/actions/products";
 
 const styles = StyleSheet.create({
@@ -26,10 +27,17 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1
+  },
+  centered: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
 const EditProductScreen = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const productId = navigation.getParam("id");
   const dispatch = useDispatch();
   const editProduct = useSelector((state) => (
@@ -42,27 +50,51 @@ const EditProductScreen = ({ navigation }) => {
   const [description, setDescription] = useState(editProduct ? editProduct.description : "");
 
   const handleSubmit = useCallback(() => {
-    if (editProduct) {
-      dispatch(productsActions.updateProduct(
+    setError(null);
+    setIsLoading(true);
+    dispatch(editProduct
+      ? productsActions.updateProduct(
         productId,
         title,
         imageUrl,
-        description
-      ));
-    } else {
-      dispatch(productsActions.createProduct(
+        description,
+        editProduct.price
+      )
+      : productsActions.createProduct(
         title,
         imageUrl,
         description,
         parseInt(price, 10)
-      ));
-    }
-    navigation.goBack();
+      ))
+        .then((res) => {
+          console.log(res, "res");
+          setIsLoading(false);
+          navigation.goBack();
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          setError(err.message);
+          setIsLoading(false);
+        });
   }, [dispatch, productId, title, imageUrl, description, price]);
 
   useEffect(() => {
     navigation.setParams({ onSubmit: handleSubmit });
   }, [handleSubmit]);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("Error", error, [{ text: "Okey" }]);
+    }
+  }, [error]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
