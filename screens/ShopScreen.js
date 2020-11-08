@@ -23,16 +23,18 @@ const styles = StyleSheet.create({
 const ShopScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const availabelProducts = useSelector((state) => state.products.availabelProducts);
   const dispatch = useDispatch();
 
   const loadProducts = useCallback(() => {
     setError(null);
-    setIsLoading(true);
-    dispatch(productsActions.fetchProducts())
-      .then(() => setIsLoading(false))
+    setIsRefreshing(true);
+    return dispatch(productsActions.fetchProducts())
+      .then(() => setIsRefreshing(false))
       .catch((err) => {
-        setIsLoading(false);
+        setIsRefreshing(false);
         setError(err.message);
       });
   }, [dispatch]);
@@ -46,7 +48,9 @@ const ShopScreen = ({ navigation }) => {
   }, [loadProducts]);
 
   useEffect(() => {
-    loadProducts();
+    setIsLoading(true);
+    loadProducts()
+      .then(() => setIsLoading(false));
   }, [dispatch, loadProducts]);
 
   const handleSelectProduct = (id, title) => {
@@ -89,6 +93,8 @@ const ShopScreen = ({ navigation }) => {
 
   return (
     <FlatList
+      onRefresh={loadProducts}
+      refreshing={isRefreshing}
       data={availabelProducts}
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => (
