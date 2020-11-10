@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { View, Text, StyleSheet, ScrollView, Image, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import Colors from "../constants/Colors";
-import GlobalStyles from "../constants/GlobalStyles";
-import * as cartActions from "../store/actions/carts";
+import Colors from "../../constants/Colors";
+import GlobalStyles from "../../constants/GlobalStyles";
+import * as cartActions from "../../store/actions/carts";
 
 const styles = StyleSheet.create({
   screen: {

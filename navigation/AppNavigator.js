@@ -1,16 +1,17 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { Ionicons } from "@expo/vector-icons";
 
-import ShopScreen from "../screens/ShopScreen";
-import ProductDetailScreen from "../screens/ProductDetailScreen";
-import CartScreen from "../screens/CartScreen";
-import OrdersScreen from "../screens/OrdersScreen";
-import ManageProductsScreen from "../screens/ManageProductsScreen";
-import EditProductScreen from "../screens/EditProductScreen";
+import ShopScreen from "../screens/app/ShopScreen";
+import ProductDetailScreen from "../screens/app/ProductDetailScreen";
+import CartScreen from "../screens/app/CartScreen";
+import OrdersScreen from "../screens/app/OrdersScreen";
+import ManageProductsScreen from "../screens/app/ManageProductsScreen";
+import EditProductScreen from "../screens/app/EditProductScreen";
+import AuthScreen from "../screens/auth/AuthScreen";
 
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
@@ -83,4 +84,20 @@ const AppNavigator = createDrawerNavigator(
   }
 );
 
-export default createAppContainer(AppNavigator);
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: AuthScreen
+  },
+  {
+    defaultNavigationOptions: navigationOptions
+  }
+);
+
+const Navigator = createSwitchNavigator(
+  {
+    Auth: AuthNavigator,
+    App: AppNavigator
+  }
+);
+
+export default createAppContainer(Navigator);

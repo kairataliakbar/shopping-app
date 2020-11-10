@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { View, Text, Button, FlatList, StyleSheet, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import CartItem from "../components/CartItem";
-import Card from "../components/Card";
-import Colors from "../constants/Colors";
-import GlobalStyles from "../constants/GlobalStyles";
-import * as cartActions from "../store/actions/carts";
-import * as ordersActions from "../store/actions/orders";
+import CartItem from "../../components/CartItem";
+import Card from "../../components/Card";
+import Colors from "../../constants/Colors";
+import GlobalStyles from "../../constants/GlobalStyles";
+import * as cartActions from "../../store/actions/carts";
+import * as ordersActions from "../../store/actions/orders";
 
 const styles = StyleSheet.create({
   screen: {

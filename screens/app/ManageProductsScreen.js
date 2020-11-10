@@ -5,10 +5,10 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
-import Colors from "../constants/Colors";
-import CustomHeaderButton from "../components/CustomHeaderButton";
-import ProductItem from "../components/ProductItem";
-import * as productActions from "../store/actions/products";
+import Colors from "../../constants/Colors";
+import CustomHeaderButton from "../../components/CustomHeaderButton";
+import ProductItem from "../../components/ProductItem";
+import * as productActions from "../../store/actions/products";
 
 const ManageProductsScreen = ({ navigation }) => {
   const userProducts = useSelector((state) => state.products.userProducts);

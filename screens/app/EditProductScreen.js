@@ -5,10 +5,10 @@ import { View, Text, StyleSheet, ScrollView, TextInput, ActivityIndicator, Alert
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import CustomHeaderButton from "../components/CustomHeaderButton";
-import GlobalStyles from "../constants/GlobalStyles";
-import Colors from "../constants/Colors";
-import * as productsActions from "../store/actions/products";
+import CustomHeaderButton from "../../components/CustomHeaderButton";
+import GlobalStyles from "../../constants/GlobalStyles";
+import Colors from "../../constants/Colors";
+import * as productsActions from "../../store/actions/products";
 
 const styles = StyleSheet.create({
   form: {

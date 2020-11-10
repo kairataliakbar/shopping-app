@@ -5,12 +5,12 @@ import { View, Text, FlatList, Button, ActivityIndicator, StyleSheet } from "rea
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import Colors from "../constants/Colors";
-import GlobalStyles from "../constants/GlobalStyles";
-import CustomHeaderButton from "../components/CustomHeaderButton";
-import ProductItem from "../components/ProductItem";
-import * as cartActions from "../store/actions/carts";
-import * as productsActions from "../store/actions/products";
+import Colors from "../../constants/Colors";
+import GlobalStyles from "../../constants/GlobalStyles";
+import CustomHeaderButton from "../../components/CustomHeaderButton";
+import ProductItem from "../../components/ProductItem";
+import * as cartActions from "../../store/actions/carts";
+import * as productsActions from "../../store/actions/products";
 
 const styles = StyleSheet.create({
   centered: {

@@ -5,11 +5,11 @@ import { FlatList, View, Text, ActivityIndicator, StyleSheet } from "react-nativ
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
 
-import CustomHeaderButton from "../components/CustomHeaderButton";
-import OrderItem from "../components/OrderItem";
-import GlobalStyles from "../constants/GlobalStyles";
-import Colors from "../constants/Colors";
-import * as ordersActions from "../store/actions/orders";
+import CustomHeaderButton from "../../components/CustomHeaderButton";
+import OrderItem from "../../components/OrderItem";
+import GlobalStyles from "../../constants/GlobalStyles";
+import Colors from "../../constants/Colors";
+import * as ordersActions from "../../store/actions/orders";
 
 const styles = StyleSheet.create({
   centered: {
