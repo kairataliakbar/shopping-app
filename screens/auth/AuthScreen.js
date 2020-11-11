@@ -7,7 +7,8 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -49,14 +50,27 @@ const styles = StyleSheet.create({
 });
 
 const AuthScreen = () => {
+  const [isSignup, setIsSignup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
-  const handleSignup = useCallback(() => {
+  const handleAuth = useCallback(() => {
     if (email.length > 0 && password.length > 0) {
-      return dispatch(authActions.signup({ email, password }));
+      setIsLoading(true);
+      return (
+        dispatch(isSignup
+          ? authActions.signup(email, password)
+          : authActions.login(email, password)
+        )
+          .then(() => setIsLoading(false))
+          .catch((err) => {
+            setIsLoading(false);
+            Alert.alert("Error", err.message, [{ text: "Okey" }]);
+          })
+      );
     }
     return Alert.alert("Error", "All fields required!", [{ text: "Okey" }]);
   }, [dispatch, email, password]);
@@ -89,17 +103,19 @@ const AuthScreen = () => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <Button
-            title="Login"
-            color={Colors.primary}
-            onPress={handleSignup}
-          />
+          {isLoading
+            ? <ActivityIndicator size="small" color={Colors.primary} />
+            : <Button
+                title={isSignup ? "Sign Up" : "Login"}
+                color={Colors.primary}
+                onPress={handleAuth}
+              />}
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            title="Switch to Sign Up"
+            title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
             color={Colors.accent}
-            onPress={() => {}}
+            onPress={() => setIsSignup(!isSignup)}
           />
         </View>
       </Card>
