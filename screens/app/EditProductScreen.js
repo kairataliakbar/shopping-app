@@ -59,7 +59,8 @@ const EditProductScreen = ({ navigation }) => {
           title,
           imageUrl,
           description,
-          editProduct.price
+          editProduct.price,
+          editProduct.ownerId
         )
         : productsActions.createProduct(
           title,

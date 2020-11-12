@@ -62,7 +62,7 @@ export const createProduct = (title, imageUrl, description, price) => {
   };
 };
 
-export const updateProduct = (id, title, imageUrl, description, price) => {
+export const updateProduct = (id, title, imageUrl, description, price, ownerId) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     const response = await fetch(`https://shopping-app-7e16f.firebaseio.com/products/${id}.json?auth=${token}`, {
@@ -70,7 +70,7 @@ export const updateProduct = (id, title, imageUrl, description, price) => {
       headers: {
         "Content-type": "application/json"
       },
-      body: JSON.stringify({ title, imageUrl, description, price })
+      body: JSON.stringify({ title, imageUrl, description, price, ownerId })
     });
 
     if (!response.ok) {

@@ -12,6 +12,7 @@ import OrdersScreen from "../screens/app/OrdersScreen";
 import ManageProductsScreen from "../screens/app/ManageProductsScreen";
 import EditProductScreen from "../screens/app/EditProductScreen";
 import AuthScreen from "../screens/auth/AuthScreen";
+import StartupScreen from "../screens/StartupScreen";
 
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
@@ -95,6 +96,7 @@ const AuthNavigator = createStackNavigator(
 
 const Navigator = createSwitchNavigator(
   {
+    Startup: StartupScreen,
     Auth: AuthNavigator,
     App: AppNavigator
   }
