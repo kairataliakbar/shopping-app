@@ -49,33 +49,29 @@ const EditProductScreen = ({ navigation }) => {
   const [price, setPrice] = useState(editProduct ? editProduct.price : "");
   const [description, setDescription] = useState(editProduct ? editProduct.description : "");
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     setError(null);
     setIsLoading(true);
-    dispatch(editProduct
-      ? productsActions.updateProduct(
-        productId,
-        title,
-        imageUrl,
-        description,
-        editProduct.price
-      )
-      : productsActions.createProduct(
-        title,
-        imageUrl,
-        description,
-        parseInt(price, 10)
-      ))
-        .then((res) => {
-          console.log(res, "res");
-          setIsLoading(false);
-          navigation.goBack();
-        })
-        .catch((err) => {
-          console.log(err, "err");
-          setError(err.message);
-          setIsLoading(false);
-        });
+    try {
+      await dispatch(editProduct
+        ? productsActions.updateProduct(
+          productId,
+          title,
+          imageUrl,
+          description,
+          editProduct.price
+        )
+        : productsActions.createProduct(
+          title,
+          imageUrl,
+          description,
+          parseInt(price, 10)
+        ));
+      navigation.goBack();
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
   }, [dispatch, productId, title, imageUrl, description, price]);
 
   useEffect(() => {

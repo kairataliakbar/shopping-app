@@ -28,15 +28,15 @@ const ShopScreen = ({ navigation }) => {
   const availabelProducts = useSelector((state) => state.products.availabelProducts);
   const dispatch = useDispatch();
 
-  const loadProducts = useCallback(() => {
+  const loadProducts = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
-    return dispatch(productsActions.fetchProducts())
-      .then(() => setIsRefreshing(false))
-      .catch((err) => {
-        setIsRefreshing(false);
-        setError(err.message);
-      });
+    try {
+      await dispatch(productsActions.fetchProducts());
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsRefreshing(false);
   }, [dispatch]);
 
   useEffect(() => {

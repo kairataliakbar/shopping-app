@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
 import {
   View,
   Text,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AuthScreen = () => {
+const AuthScreen = ({ navigation }) => {
   const [isSignup, setIsSignup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -57,20 +58,19 @@ const AuthScreen = () => {
 
   const dispatch = useDispatch();
 
-  const handleAuth = useCallback(() => {
+  const handleAuth = useCallback(async () => {
     if (email.length > 0 && password.length > 0) {
-      setIsLoading(true);
-      return (
-        dispatch(isSignup
+      try {
+        setIsLoading(true);
+        await dispatch(isSignup
           ? authActions.signup(email, password)
           : authActions.login(email, password)
-        )
-          .then(() => setIsLoading(false))
-          .catch((err) => {
-            setIsLoading(false);
-            Alert.alert("Error", err.message, [{ text: "Okey" }]);
-          })
-      );
+        );
+        return navigation.navigate("App");
+      } catch (err) {
+        setIsLoading(false);
+        return Alert.alert("Error", err.message, [{ text: "Okey" }]);
+      }
     }
     return Alert.alert("Error", "All fields required!", [{ text: "Okey" }]);
   }, [dispatch, email, password]);
@@ -125,6 +125,12 @@ const AuthScreen = () => {
 
 AuthScreen.navigationOptions = {
   headerTitle: "Authenticate"
+};
+
+AuthScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  })
 };
 
 export default AuthScreen;

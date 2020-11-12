@@ -25,10 +25,10 @@ const OrdersScreen = () => {
   const orders = useSelector((state) => state.orders.orders);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(true);
-    dispatch(ordersActions.fetchOrders())
-      .then(() => setIsLoading(false));
+    await dispatch(ordersActions.fetchOrders());
+    setIsLoading(false);
   }, [dispatch]);  
 
   if (isLoading) {

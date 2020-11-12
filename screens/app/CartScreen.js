@@ -37,10 +37,10 @@ const CartScreen = () => {
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  const handleAddOrder = () => {
+  const handleAddOrder = async () => {
     setIsLoading(true);
-    dispatch(ordersActions.addOrder(items, totalPriceItems))
-      .then(() => setIsLoading(false));
+    await dispatch(ordersActions.addOrder(items, totalPriceItems));
+    setIsLoading(false);
   };
 
   return (
