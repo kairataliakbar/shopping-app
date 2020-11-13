@@ -33,7 +33,7 @@ const StartupScreen = ({ navigation }) => {
       }
 
       navigation.navigate("App");
-      dispatch(authActions.authenticate(token, userId));
+      dispatch(authActions.authenticate(token, userId, expirationDate.getTime() - new Date().getTime()));
     };
 
     tryLogin();

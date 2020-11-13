@@ -1,9 +1,11 @@
 /* eslint-disable react/display-name */
 import React from "react";
+import { View, Button, SafeAreaView } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createDrawerNavigator } from "react-navigation-drawer";
+import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 
 import ShopScreen from "../screens/app/ShopScreen";
 import ProductDetailScreen from "../screens/app/ProductDetailScreen";
@@ -16,6 +18,7 @@ import StartupScreen from "../screens/StartupScreen";
 
 import Colors from "../constants/Colors";
 import GlobalStyles from "../constants/GlobalStyles";
+import * as authActions from "../store/actions/auth";
 
 const navigationOptions = {
   headerStyle: {
@@ -81,6 +84,21 @@ const AppNavigator = createDrawerNavigator(
   {
     contentOptions: {
       activeTintColor: Colors.primary,
+    },
+    contentComponent: (props) => {
+      const disptach = useDispatch();
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+            <DrawerItems {...props} />
+            <Button
+              title="Logout"
+              color={Colors.primary}
+              onPress={() => disptach(authActions.logout())}
+            />
+          </SafeAreaView>
+        </View>
+      );
     }
   }
 );
