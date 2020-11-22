@@ -2,14 +2,19 @@
   "expo": {
     "name": "Shopping App",
     "slug": "shopping-app",
+    "description": "Description",
     "privacy": "public",
     "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/places.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/places-adaptive.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#C2185"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

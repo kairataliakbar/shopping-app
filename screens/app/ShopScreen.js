@@ -122,7 +122,7 @@ const ShopScreen = ({ navigation }) => {
 
 ShopScreen.navigationOptions = ({ navigation }) => {
   return {
-    headerTitle: "All Products",
+    headerTitle: "All Products in Shopping App",
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
