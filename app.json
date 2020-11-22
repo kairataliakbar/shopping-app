@@ -2,6 +2,11 @@
   "expo": {
     "name": "Shopping App",
     "slug": "shopping-app",
+    "privacy": "public",
+    "platform": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
